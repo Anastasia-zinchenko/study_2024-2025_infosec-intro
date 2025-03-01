@@ -1,0 +1,997 @@
+<h1 id="информация">Информация</h1>
+<h2 id="докладчик">Докладчик</h2>
+<div class="columns" data-align="center">
+<div class="column" style="width:70%;">
+<ul>
+<li>Зинченко Анастасия Романовна</li>
+<li>НБИбд-02-23</li>
+<li>Российский университет дружбы народов</li>
+</ul>
+</div><div class="column" style="width:30%;">
+<p><img src="./image/kulyabov.jpg" /></p>
+</div>
+</div>
+<h1 id="цель-работы">Цель работы</h1>
+<p>Целью данной работы является получение практических навыков работы в
+консоли с атрибутами файлов, закрепление теоретических основ
+дискреционного разграничения доступа в современных системах с открытым
+кодом на базе ОС Linux.</p>
+<h1 id="выполнение-лабораторной-работы">Выполнение лабораторной
+работы</h1>
+<h2 id="создание-учётной-записи-пользовтеля-guest">Создание учётной
+записи пользовтеля guest</h2>
+<p>В установленной при выполнении предыдущей лабораторной работы
+операционной системе создаём учётную запись пользователя guest
+(используя учётную запись администратора): <em>useradd guest</em> (рис.
+<span class="citation" data-cites="fig:001">[-@fig:001]</span>)</p>
+<figure id="fig:001">
+<img src="image/001.png" style="width:70.0%"
+alt="Создание учётносй записи пользователя guest" />
+<figcaption aria-hidden="true">Создание учётносй записи пользователя
+guest</figcaption>
+</figure>
+<p>Зададим пароль для пользователя guest: <em>passwd guest</em> (рис.
+<span class="citation" data-cites="fig:002">[-@fig:002]</span>)</p>
+<figure id="fig:002">
+<img src="image/002.png" style="width:70.0%"
+alt="Пароль для пользователя guest" />
+<figcaption aria-hidden="true">Пароль для пользователя
+guest</figcaption>
+</figure>
+<p>Далее зайдём в систему от имени пользователя guest (рис. <span
+class="citation" data-cites="fig:003">[-@fig:003]</span>)</p>
+<figure id="fig:003">
+<img src="image/003.png" style="width:70.0%"
+alt="Вход в учётную запись пользователя guest" />
+<figcaption aria-hidden="true">Вход в учётную запись пользователя
+guest</figcaption>
+</figure>
+<h2 id="после-входа-в-систему-от-имени-пользователя-guest">После входа в
+систему от имени пользователя guest</h2>
+<p>Определим директорию, в которой мы находимся, командой <em>pwd</em>.
+(рис. <span class="citation"
+data-cites="fig:004">[-@fig:004]</span>)</p>
+<figure id="fig:004">
+<img src="image/004.png" style="width:70.0%" alt="Текущая директория" />
+<figcaption aria-hidden="true">Текущая директория</figcaption>
+</figure>
+<p>Уточним имя нашего пользователя командой <em>whoami</em> (рис. <span
+class="citation" data-cites="fig:005">[-@fig:005]</span>)</p>
+<figure id="fig:005">
+<img src="image/005.png" style="width:70.0%"
+alt="Имя нашего пользователя" />
+<figcaption aria-hidden="true">Имя нашего пользователя</figcaption>
+</figure>
+<p>Далее уточним имя нашего пользователя, его группу, а также группы,
+куда входит пользователь, командой <em>id</em> (рис. <span
+class="citation" data-cites="fig:006">[-@fig:006]</span>)</p>
+<figure id="fig:006">
+<img src="image/006.png" style="width:70.0%"
+alt="Информация о пользователе через команду id" />
+<figcaption aria-hidden="true">Информация о пользователе через команду
+id</figcaption>
+</figure>
+<p>Далее сравним вывод команды <em>id</em> с выводом команды
+<em>groups</em>. В выводе команды <em>groups</em> информация только о
+названии группы, к которой относится пользователь. В выводе команды
+<em>id</em> больше информации: имя пользователя и имя группы, также коды
+имени пользователя и группы (рис. <span class="citation"
+data-cites="fig:007">[-@fig:007]</span>)</p>
+<figure id="fig:007">
+<img src="image/007.png" style="width:70.0%"
+alt="Информация о пользователе через команду groups" />
+<figcaption aria-hidden="true">Информация о пользователе через команду
+groups</figcaption>
+</figure>
+<p>Посмотрим файл /etc/passwd командой <em>cat /etc/passwd &amp; grep
+guest</em>, чтобы найти в нём информацию об учётной записи пользователя
+guest, определить его uid и gid. Найденные значение совпадают с
+полученными в предыдущих выводах (рис. <span class="citation"
+data-cites="fig:008">[-@fig:008]</span>)</p>
+<figure id="fig:008">
+<img src="image/008.png" style="width:70.0%"
+alt="Информация о пользователе в файле /etc/passwd" />
+<figcaption aria-hidden="true">Информация о пользователе в файле
+/etc/passwd</figcaption>
+</figure>
+<p>Определим существующие в системе директории командой <em>ls -l
+/home/</em>. Нам удалось получить список поддиректорий директории /home.
+Права у директорий eavernikovskaya и guest: <em>drwx——</em> (рис. <span
+class="citation" data-cites="fig:009">[-@fig:009]</span>)</p>
+<figure id="fig:009">
+<img src="image/009.png" style="width:70.0%"
+alt="Существующие в системе директории" />
+<figcaption aria-hidden="true">Существующие в системе
+директории</figcaption>
+</figure>
+<p>Далее проверим какие расширенные атрибуты установлены на
+поддиректориях, находящихся в директории /home, командой: <em>lsattr
+/home</em>. Этого увидеть не удалось (рис. <span class="citation"
+data-cites="fig:010">[-@fig:010]</span>)</p>
+<figure id="fig:010">
+<img src="image/010.png" style="width:70.0%"
+alt="Проверка расширенных атрибутов (1)" />
+<figcaption aria-hidden="true">Проверка расширенных атрибутов
+(1)</figcaption>
+</figure>
+<p>Далее создадим в домашней директории поддиректорию dir1 командой
+<em>mkdir dir1</em> (рис. <span class="citation"
+data-cites="fig:012">[-@fig:012]</span>)</p>
+<figure id="fig:011">
+<img src="image/011.png" style="width:70.0%"
+alt="Создание поддиректории dir1" />
+<figcaption aria-hidden="true">Создание поддиректории dir1</figcaption>
+</figure>
+<p>Снимем с директории dir1 все атрибуты командой <em>chmod 000
+dir1</em> (рис. <span class="citation"
+data-cites="fig:012">[-@fig:012]</span>)</p>
+<table style="width:100%;">
+<caption>Установленные права и разрешённые действия</caption>
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 10%" />
+<col style="width: 10%" />
+<col style="width: 10%" />
+<col style="width: 10%" />
+<col style="width: 10%" />
+<col style="width: 10%" />
+<col style="width: 10%" />
+<col style="width: 10%" />
+<col style="width: 10%" />
+</colgroup>
+<tbody>
+<tr class="odd">
+<td>Права директории</td>
+<td>Права файла</td>
+<td>Создание файла</td>
+<td>Удаление файла</td>
+<td>Запись в файл</td>
+<td>Чтение файла</td>
+<td>Смена директории</td>
+<td>Просмотр файлов в директории</td>
+<td>Переименование файла</td>
+<td>Смена атрибутов файла</td>
+</tr>
+<tr class="even">
+<td>d(000)</td>
+<td>(000)</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+</tr>
+<tr class="odd">
+<td>d(000)</td>
+<td>(100)</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+</tr>
+<tr class="even">
+<td>d(000)</td>
+<td>(200)</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+</tr>
+<tr class="odd">
+<td>d(000)</td>
+<td>(300)</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+</tr>
+<tr class="even">
+<td>d(000)</td>
+<td>(400)</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+</tr>
+<tr class="odd">
+<td>d(000)</td>
+<td>(500)</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+</tr>
+<tr class="even">
+<td>d(000)</td>
+<td>(600)</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+</tr>
+<tr class="odd">
+<td>d(000)</td>
+<td>(700)</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+</tr>
+<tr class="even">
+<td>d(100)</td>
+<td>(000)</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>+</td>
+</tr>
+<tr class="odd">
+<td>d(100)</td>
+<td>(100)</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>+</td>
+</tr>
+<tr class="even">
+<td>d(100)</td>
+<td>(200)</td>
+<td>-</td>
+<td>-</td>
+<td>+</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>+</td>
+</tr>
+<tr class="odd">
+<td>d(100)</td>
+<td>(300)</td>
+<td>-</td>
+<td>-</td>
+<td>+</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>+</td>
+</tr>
+<tr class="even">
+<td>d(100)</td>
+<td>(400)</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>+</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>+</td>
+</tr>
+<tr class="odd">
+<td>d(100)</td>
+<td>(500)</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>+</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>+</td>
+</tr>
+<tr class="even">
+<td>d(100)</td>
+<td>(600)</td>
+<td>-</td>
+<td>-</td>
+<td>+</td>
+<td>+</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>+</td>
+</tr>
+<tr class="odd">
+<td>d(100)</td>
+<td>(700)</td>
+<td>-</td>
+<td>-</td>
+<td>+</td>
+<td>+</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>+</td>
+</tr>
+<tr class="even">
+<td>d(200)</td>
+<td>(000)</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+</tr>
+<tr class="odd">
+<td>d(200)</td>
+<td>(100)</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+</tr>
+<tr class="even">
+<td>d(200)</td>
+<td>(200)</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+</tr>
+<tr class="odd">
+<td>d(200)</td>
+<td>(300)</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+</tr>
+<tr class="even">
+<td>d(200)</td>
+<td>(400)</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+</tr>
+<tr class="odd">
+<td>d(200)</td>
+<td>(500)</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+</tr>
+<tr class="even">
+<td>d(200)</td>
+<td>(600)</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+</tr>
+<tr class="odd">
+<td>d(200)</td>
+<td>(700)</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+</tr>
+<tr class="even">
+<td>d(300)</td>
+<td>(000)</td>
+<td>+</td>
+<td>+</td>
+<td>-</td>
+<td>-</td>
+<td>+</td>
+<td>-</td>
+<td>+</td>
+<td>+</td>
+</tr>
+<tr class="odd">
+<td>d(300)</td>
+<td>(100)</td>
+<td>+</td>
+<td>+</td>
+<td>-</td>
+<td>-</td>
+<td>+</td>
+<td>-</td>
+<td>+</td>
+<td>+</td>
+</tr>
+<tr class="even">
+<td>d(300)</td>
+<td>(200)</td>
+<td>+</td>
+<td>+</td>
+<td>+</td>
+<td>-</td>
+<td>+</td>
+<td>-</td>
+<td>+</td>
+<td>+</td>
+</tr>
+<tr class="odd">
+<td>d(300)</td>
+<td>(300)</td>
+<td>+</td>
+<td>+</td>
+<td>+</td>
+<td>-</td>
+<td>+</td>
+<td>-</td>
+<td>+</td>
+<td>+</td>
+</tr>
+<tr class="even">
+<td>d(300)</td>
+<td>(400)</td>
+<td>+</td>
+<td>+</td>
+<td>-</td>
+<td>+</td>
+<td>+</td>
+<td>-</td>
+<td>+</td>
+<td>+</td>
+</tr>
+<tr class="odd">
+<td>d(300)</td>
+<td>(500)</td>
+<td>+</td>
+<td>+</td>
+<td>-</td>
+<td>+</td>
+<td>+</td>
+<td>-</td>
+<td>+</td>
+<td>+</td>
+</tr>
+<tr class="even">
+<td>d(300)</td>
+<td>(600)</td>
+<td>+</td>
+<td>+</td>
+<td>+</td>
+<td>+</td>
+<td>+</td>
+<td>-</td>
+<td>+</td>
+<td>+</td>
+</tr>
+<tr class="odd">
+<td>d(300)</td>
+<td>(700)</td>
+<td>+</td>
+<td>+</td>
+<td>+</td>
+<td>+</td>
+<td>+</td>
+<td>-</td>
+<td>+</td>
+<td>+</td>
+</tr>
+<tr class="even">
+<td>d(400)</td>
+<td>(000)</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>+</td>
+<td>-</td>
+<td>-</td>
+</tr>
+<tr class="odd">
+<td>d(400)</td>
+<td>(100)</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>+</td>
+<td>-</td>
+<td>-</td>
+</tr>
+<tr class="even">
+<td>d(400)</td>
+<td>(200)</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>+</td>
+<td>-</td>
+<td>-</td>
+</tr>
+<tr class="odd">
+<td>d(400)</td>
+<td>(300)</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>+</td>
+<td>-</td>
+<td>-</td>
+</tr>
+<tr class="even">
+<td>d(400)</td>
+<td>(400)</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>+</td>
+<td>-</td>
+<td>-</td>
+</tr>
+<tr class="odd">
+<td>d(400)</td>
+<td>(500)</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>+</td>
+<td>-</td>
+<td>-</td>
+</tr>
+<tr class="even">
+<td>d(400)</td>
+<td>(600)</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>+</td>
+<td>-</td>
+<td>-</td>
+</tr>
+<tr class="odd">
+<td>d(400)</td>
+<td>(700)</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>+</td>
+<td>-</td>
+<td>-</td>
+</tr>
+<tr class="even">
+<td>d(500)</td>
+<td>(000)</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>+</td>
+<td>-</td>
+<td>+</td>
+</tr>
+<tr class="odd">
+<td>d(500)</td>
+<td>(100)</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>+</td>
+<td>-</td>
+<td>+</td>
+</tr>
+<tr class="even">
+<td>d(500)</td>
+<td>(200)</td>
+<td>-</td>
+<td>-</td>
+<td>+</td>
+<td>-</td>
+<td>-</td>
+<td>+</td>
+<td>-</td>
+<td>+</td>
+</tr>
+<tr class="odd">
+<td>d(500)</td>
+<td>(300)</td>
+<td>-</td>
+<td>-</td>
+<td>+</td>
+<td>-</td>
+<td>-</td>
+<td>+</td>
+<td>-</td>
+<td>+</td>
+</tr>
+<tr class="even">
+<td>d(500)</td>
+<td>(400)</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>+</td>
+<td>-</td>
+<td>+</td>
+<td>-</td>
+<td>+</td>
+</tr>
+<tr class="odd">
+<td>d(500)</td>
+<td>(500)</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>+</td>
+<td>-</td>
+<td>+</td>
+<td>-</td>
+<td>+</td>
+</tr>
+<tr class="even">
+<td>d(500)</td>
+<td>(600)</td>
+<td>-</td>
+<td>-</td>
+<td>+</td>
+<td>+</td>
+<td>-</td>
+<td>+</td>
+<td>-</td>
+<td>+</td>
+</tr>
+<tr class="odd">
+<td>d(500)</td>
+<td>(700)</td>
+<td>-</td>
+<td>-</td>
+<td>+</td>
+<td>+</td>
+<td>-</td>
+<td>+</td>
+<td>-</td>
+<td>+</td>
+</tr>
+<tr class="even">
+<td>d(600)</td>
+<td>(000)</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>+</td>
+<td>-</td>
+<td>-</td>
+</tr>
+<tr class="odd">
+<td>d(600)</td>
+<td>(100)</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>+</td>
+<td>-</td>
+<td>-</td>
+</tr>
+<tr class="even">
+<td>d(600)</td>
+<td>(200)</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>+</td>
+<td>-</td>
+<td>-</td>
+</tr>
+<tr class="odd">
+<td>d(600)</td>
+<td>(300)</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>+</td>
+<td>-</td>
+<td>-</td>
+</tr>
+<tr class="even">
+<td>d(600)</td>
+<td>(400)</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>+</td>
+<td>-</td>
+<td>-</td>
+</tr>
+<tr class="odd">
+<td>d(600)</td>
+<td>(500)</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>+</td>
+<td>-</td>
+<td>-</td>
+</tr>
+<tr class="even">
+<td>d(600)</td>
+<td>(600)</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>+</td>
+<td>-</td>
+<td>-</td>
+</tr>
+<tr class="odd">
+<td>d(600)</td>
+<td>(700)</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>+</td>
+<td>-</td>
+<td>-</td>
+</tr>
+<tr class="even">
+<td>d(700)</td>
+<td>(000)</td>
+<td>+</td>
+<td>+</td>
+<td>-</td>
+<td>-</td>
+<td>+</td>
+<td>+</td>
+<td>+</td>
+<td>+</td>
+</tr>
+<tr class="odd">
+<td>d(700)</td>
+<td>(100)</td>
+<td>+</td>
+<td>+</td>
+<td>-</td>
+<td>-</td>
+<td>+</td>
+<td>+</td>
+<td>+</td>
+<td>+</td>
+</tr>
+<tr class="even">
+<td>d(700)</td>
+<td>(200)</td>
+<td>+</td>
+<td>+</td>
+<td>+</td>
+<td>-</td>
+<td>+</td>
+<td>+</td>
+<td>+</td>
+<td>+</td>
+</tr>
+<tr class="odd">
+<td>d(700)</td>
+<td>(300)</td>
+<td>+</td>
+<td>+</td>
+<td>+</td>
+<td>-</td>
+<td>+</td>
+<td>+</td>
+<td>+</td>
+<td>+</td>
+</tr>
+<tr class="even">
+<td>d(700)</td>
+<td>(400)</td>
+<td>+</td>
+<td>+</td>
+<td>-</td>
+<td>+</td>
+<td>+</td>
+<td>+</td>
+<td>+</td>
+<td>+</td>
+</tr>
+<tr class="odd">
+<td>d(700)</td>
+<td>(500)</td>
+<td>+</td>
+<td>+</td>
+<td>-</td>
+<td>+</td>
+<td>+</td>
+<td>+</td>
+<td>+</td>
+<td>+</td>
+</tr>
+<tr class="even">
+<td>d(700)</td>
+<td>(600)</td>
+<td>+</td>
+<td>+</td>
+<td>+</td>
+<td>+</td>
+<td>+</td>
+<td>+</td>
+<td>+</td>
+<td>+</td>
+</tr>
+<tr class="odd">
+<td>d(700)</td>
+<td>(700)</td>
+<td>+</td>
+<td>+</td>
+<td>+</td>
+<td>+</td>
+<td>+</td>
+<td>+</td>
+<td>+</td>
+<td>+</td>
+</tr>
+</tbody>
+</table>
+<table>
+<caption>Минимальные права для совершения операций</caption>
+<colgroup>
+<col style="width: 20%" />
+<col style="width: 20%" />
+<col style="width: 20%" />
+<col style="width: 20%" />
+<col style="width: 20%" />
+</colgroup>
+<tbody>
+<tr class="odd">
+<td>Операция</td>
+<td></td>
+<td>Минимальные права на директорию</td>
+<td></td>
+<td>Минимальные права на файл</td>
+</tr>
+<tr class="even">
+<td>Создание файла</td>
+<td></td>
+<td>d(300)</td>
+<td></td>
+<td>-</td>
+</tr>
+<tr class="odd">
+<td>Удаление файла</td>
+<td></td>
+<td>d(300)</td>
+<td></td>
+<td>-</td>
+</tr>
+<tr class="even">
+<td>Чтение файла</td>
+<td></td>
+<td>d(100)</td>
+<td></td>
+<td>(400)</td>
+</tr>
+<tr class="odd">
+<td>Запись в файл</td>
+<td></td>
+<td>d(100)</td>
+<td></td>
+<td>(200)</td>
+</tr>
+<tr class="even">
+<td>Переименование файла</td>
+<td></td>
+<td>d(300)</td>
+<td></td>
+<td>(000)</td>
+</tr>
+<tr class="odd">
+<td>Создание поддиректории</td>
+<td></td>
+<td>d(300)</td>
+<td></td>
+<td>-</td>
+</tr>
+<tr class="even">
+<td>Удаление поддиректории</td>
+<td></td>
+<td>d(300)</td>
+<td></td>
+<td>-</td>
+</tr>
+</tbody>
+</table>
+<h1 id="выводы">Выводы</h1>
+<p>В ходе выполнения лабораторной работы мы получили практические навыки
+работы в консоли с атрибутами файлов, закрепили теоретические основы
+дискреционного разграничения доступа в современных системах с открытым
+кодом на базе ОС Linux.</p>
