@@ -1,0 +1,233 @@
+<h1 id="информация">Информация</h1>
+<h2 id="докладчик">Докладчик</h2>
+<ul>
+<li>Зинченко Анастасия Романовна</li>
+<li>НБИбд-02-23</li>
+<li>Российский университет дружбы народов</li>
+</ul>
+<h1 id="цель-работы">Цель работы</h1>
+<p>Приобретение практических навыков по установке DVWA.</p>
+<h1 id="задание">Задание</h1>
+<ol type="1">
+<li>Установить DVWA в гостевую систему Kali Linux.</li>
+</ol>
+<h1 id="выполнение-2-ого-этапа-индивидуального-проекта">Выполнение 2-ого
+этапа индивидуального проекта</h1>
+<h2 id="загрузка-dvwa">Загрузка DVWA</h2>
+<p>DVWA (Damn Vulnerable Web Application) - это веб приложение на
+PHP/MySQL, которое “чертовски уязвимо”. Его главное цель - помочь
+профессионалам или новечкам протестировать их навыки в сфере
+инормационной безопасности. На сайте
+https://nooblinux.com/how-to-install-dvwa/ очень хорошо и подробно
+описано как устанавливать и настраивать DVWA в гостевой системе Kali
+Linux. Поскольку мы будем настраивать DVWA на нашем локальном хосте,
+запустим терминал и перейдём в /var/www/html: <em>cd /var/www/html</em>.
+Это место, где хранятся файлы локального хоста (рис. <span
+class="citation" data-cites="fig:001">[-@fig:001]</span>)</p>
+<figure id="fig:001">
+<img src="image/001.png" style="width:70.0%"
+alt="Переход в каталог /var/www/html" />
+<figcaption aria-hidden="true">Переход в каталог
+/var/www/html</figcaption>
+</figure>
+<p>Далее склонируем репозиторий https://github.com/digininja/DVWA в
+каталог /html с помощью команды: <em>sudo git clone
+https://github.com/digininja/DVWA</em> (рис. <span class="citation"
+data-cites="fig:002">[-@fig:002]</span>)</p>
+<figure id="fig:002">
+<img src="image/002.png" style="width:70.0%"
+alt="Клонирование репозитория DVWA" />
+<figcaption aria-hidden="true">Клонирование репозитория
+DVWA</figcaption>
+</figure>
+<h2 id="настройка-dvwa">Настройка DVWA</h2>
+<p>После успешного клонирования репозитория выполним команду
+<em>ls</em>, чтобы проверить успешное клонирование DVWA (рис. <span
+class="citation" data-cites="fig:003">[-@fig:003]</span>)</p>
+<figure id="fig:003">
+<img src="image/003.png" style="width:70.0%"
+alt="Проверка успешного клонирования" />
+<figcaption aria-hidden="true">Проверка успешного
+клонирования</figcaption>
+</figure>
+<p>Теперь назначим разрешения Read, Write и Execute (777) для папки
+DVWA. Для этого выполним команду <em>sudo chmod -R 777 DWVA</em>(рис.
+<span class="citation" data-cites="fig:004">[-@fig:004]</span>)</p>
+<figure id="fig:004">
+<img src="image/004.png" style="width:70.0%"
+alt="Разрешения для папки DWVA" />
+<figcaption aria-hidden="true">Разрешения для папки DWVA</figcaption>
+</figure>
+<p>Для настройки и конфигурации DVWA перейдём в каталог DVWA/config:
+<em>cd DVWA/config</em>. И посмотрим содержимое этого каталога (рис.
+<span class="citation" data-cites="fig:005">[-@fig:005]</span>)</p>
+<figure id="fig:005">
+<img src="image/005.png" style="width:70.0%"
+alt="Переход в каталог DVWA/config и его содержимое" />
+<figcaption aria-hidden="true">Переход в каталог DVWA/config и его
+содержимое</figcaption>
+</figure>
+<p>Мы видим файл с именем config.inc.php.dist. Этот файл содержит
+конфигурации DVWA по умолчанию. Не будем его трогать, и он будет нашей
+резервной копией, если дела пойдут не так. Вместо этого создадим копию
+этого файла с именем config.inc.php, которое будем использовать для
+настройки DVWA: <em>sudo cp config.inc.php.dist config.inc.php</em>
+(рис. <span class="citation"
+data-cites="fig:006">[-@fig:006]</span>)</p>
+<figure id="fig:006">
+<img src="image/006.png" style="width:70.0%"
+alt="Создание копии файла config.inc.php.dist" />
+<figcaption aria-hidden="true">Создание копии файла
+config.inc.php.dist</figcaption>
+</figure>
+<p>Теперь откроем config.inc.php файл в nano редакторе, чтобы выполнить
+необходимые настройки. Прокрутим вниз до точки, где мы увидим параметры,
+такие как db_database, db_user, db_password и т. д. Поменяем эти
+значения как нам удобно (рис. <span class="citation"
+data-cites="fig:007">[-@fig:007]</span>), (рис. <span class="citation"
+data-cites="fig:008">[-@fig:008]</span>)</p>
+<figure id="fig:007">
+<img src="image/007.png" style="width:70.0%"
+alt="Открытие файла config.inc.php" />
+<figcaption aria-hidden="true">Открытие файла
+config.inc.php</figcaption>
+</figure>
+<figure id="fig:008">
+<img src="image/008.png" style="width:70.0%"
+alt="Редактирование файла config.inc.php" />
+<figcaption aria-hidden="true">Редактирование файла
+config.inc.php</figcaption>
+</figure>
+<h2 id="настройка-базы-данных">Настройка базы данных</h2>
+<p>По умолчанию Kali Linux поставляется с установленной системой
+управления реляционной базой данных MariaDB . Поэтому нам не нужно
+устанавливать никаких пакетов. Сначала запустим службу mysql: <em>sudo
+systemctl start mysql</em> (рис. <span class="citation"
+data-cites="fig:009">[-@fig:009]</span>)</p>
+<figure id="fig:009">
+<img src="image/009.png" style="width:70.0%"
+alt="Запуск службы mysql" />
+<figcaption aria-hidden="true">Запуск службы mysql</figcaption>
+</figure>
+<p>Проверим запущена ли служба: <em>systemctl status mysql</em> (рис.
+<span class="citation" data-cites="fig:010">[-@fig:010]</span>)</p>
+<figure id="fig:010">
+<img src="image/010.png" style="width:70.0%"
+alt="Проверка статуса службы mysql" />
+<figcaption aria-hidden="true">Проверка статуса службы
+mysql</figcaption>
+</figure>
+<p>Для входа в базу данных используем команду <em>sudo mysql -u root
+-p</em>. В нашем случае мы используем root, так как это имя
+суперпользователя, установленное в нашей системе. Появляется командная
+строка с приглашением “MariaDB”, далее создадим в ней нового
+пользователя, используя учетные данные из файла config.inc.php с помощью
+команды <em>create user ‘userDVWA’@‘127.0.0.1’ identified by “dvwa”</em>
+(рис. <span class="citation"
+data-cites="fig:011">[-@fig:011]</span>)</p>
+<figure id="fig:011">
+<img src="image/011.png" style="width:70.0%"
+alt="Создание нового пользователя" />
+<figcaption aria-hidden="true">Создание нового пользователя</figcaption>
+</figure>
+<p>Теперь нам нужно предоставить этому пользователю полную привилегию
+над dvwaбазой данных. Выполним команду <em>grant all privileges on dvwa.
+to ‘userDVWA’@‘127.0.0.1’ identified by “dvwa”</em> (рис. <span
+class="citation" data-cites="fig:012">[-@fig:012]</span>)</p>
+<figure id="fig:012">
+<img src="image/012.png" style="width:70.0%"
+alt="Предоставление пользователю полных привилегий над dvwa" />
+<figcaption aria-hidden="true">Предоставление пользователю полных
+привилегий над dvwa</figcaption>
+</figure>
+<h2 id="настройка-сервера-apache">Настройка сервера Apache</h2>
+<p>Веб-сервер Apache установлен по умолчанию в Kali Linux. Поэтому нам
+не нужно устанавливать никаких дополнительных пакетов. Чтобы приступить
+к настройке Apache2, запустиv nерминал и перейдём в /etc/php/8.2/apache2
+(рис. <span class="citation"
+data-cites="fig:013">[-@fig:013]</span>)</p>
+<figure id="fig:013">
+<img src="image/013.png" style="width:70.0%"
+alt="Переход в каталог /etc/php/8.2/apache2" />
+<figcaption aria-hidden="true">Переход в каталог
+/etc/php/8.2/apache2</figcaption>
+</figure>
+<p>Далее откроем файл php.ini и найдём строки allow_url_fopen и
+allow_url_include. Они должны обе иметь значение On (рис. <span
+class="citation" data-cites="fig:014">[-@fig:014]</span>), (рис. <span
+class="citation" data-cites="fig:015">[-@fig:015]</span>)</p>
+<figure id="fig:014">
+<img src="image/014.png" style="width:70.0%"
+alt="Открытие файла php.ini" />
+<figcaption aria-hidden="true">Открытие файла php.ini</figcaption>
+</figure>
+<figure id="fig:015">
+<img src="image/015.png" style="width:70.0%"
+alt="Редактирование файла php.ini" />
+<figcaption aria-hidden="true">Редактирование файла php.ini</figcaption>
+</figure>
+<p>Далее запустим службу веб-сервера apache с помощью <em>sudo systemctl
+start apache2</em> (рис. <span class="citation"
+data-cites="fig:016">[-@fig:016]</span>)</p>
+<figure id="fig:016">
+<img src="image/016.png" style="width:70.0%"
+alt="Запуск службы apache" />
+<figcaption aria-hidden="true">Запуск службы apache</figcaption>
+</figure>
+<p>B проверим запущена ли служба: <em>systemctl status apache</em> (рис.
+<span class="citation" data-cites="fig:017">[-@fig:017]</span>)</p>
+<figure id="fig:017">
+<img src="image/017.png" style="width:70.0%"
+alt="Проверка статуса службы apache" />
+<figcaption aria-hidden="true">Проверка статуса службы
+apache</figcaption>
+</figure>
+<h2 id="открытие-dvwa-в-веб-браузере">Открытие DVWA в веб-браузере</h2>
+<p>К этому моменту мы настроили DVWA, базу данных и веб-сервер Apache.
+Теперь мы можем приступить к запуску приложения DVWA. Запустите
+веб-браузер и перейдём на страницу http://127.0.0.1/DVWA/setup.php (рис.
+<span class="citation" data-cites="fig:018">[-@fig:018]</span>)</p>
+<figure id="fig:018">
+<img src="image/018.png" style="width:70.0%"
+alt="Запуск веб-приложения" />
+<figcaption aria-hidden="true">Запуск веб-приложения</figcaption>
+</figure>
+<p>Прокрутив страницу вниз, нажмём кнопку «Создать/сбросить базу данных»
+в конце страницы (рис. <span class="citation"
+data-cites="fig:019">[-@fig:019]</span>)</p>
+<figure id="fig:019">
+<img src="image/019.png" style="width:70.0%"
+alt="Создание базы данных" />
+<figcaption aria-hidden="true">Создание базы данных</figcaption>
+</figure>
+<p>Это создаст и настроит базу данных DVWA. Через несколько секунд мы
+будем перенаправлены на страницу входа в DVWA. Для входа используем
+учетные данные по умолчанию:</p>
+<ul>
+<li>Имя пользователя: admin</li>
+<li>Пароль: password</li>
+</ul>
+<p>(рис. <span class="citation"
+data-cites="fig:020">[-@fig:020]</span>)</p>
+<figure id="fig:020">
+<img src="image/020.png" style="width:70.0%" alt="Авторизация" />
+<figcaption aria-hidden="true">Авторизация</figcaption>
+</figure>
+<p>После успешного входа в систему мы окажемся на домашней странице DVWA
+(рис. <span class="citation"
+data-cites="fig:021">[-@fig:021]</span>)</p>
+<figure id="fig:021">
+<img src="image/021.png" style="width:70.0%"
+alt="Домашняя страница DVWA" />
+<figcaption aria-hidden="true">Домашняя страница DVWA</figcaption>
+</figure>
+<h1 id="выводы">Выводы</h1>
+<p>В ходе выполнения 2-ого этапа индивидуального проекта мы установили
+DVWA в гостевую систему Kali Linux</p>
+<h1 id="список-литературы">Список литературы</h1>
+<ol type="1">
+<li>Этапы реализации проекта [Электронный ресурс] URL:
+https://esystem.rudn.ru/mod/page/view.php?id=1220336</li>
+<li>Репозиторий DVWA [Электронный ресурс] URL:
+https://github.com/digininja/DVWA</li>
+</ol>
