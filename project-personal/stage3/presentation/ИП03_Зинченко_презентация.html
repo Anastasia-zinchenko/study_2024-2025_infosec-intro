@@ -1,0 +1,84 @@
+<h1 id="вводная-часть">Вводная часть</h1>
+<h2 id="цель-работы">Цель работы</h2>
+<p>Приобретение практических навыков по использованию инструмента Hydra
+для бутфорса паролей</p>
+<h2 id="задание">Задание</h2>
+<ol type="1">
+<li>Реалзовать эксплуатацию уязвимости с помощью бутфорса паролей</li>
+</ol>
+<h1 id="выполнение-3-ого-этапа-индивидуального-проекта">Выполнение 3-ого
+этапа индивидуального проекта</h1>
+<h2 id="распаковка-архива-с-паролями">Распаковка архива с паролями</h2>
+<p>Чтобы пробутфорсить пароль, нужно для начала найти большой список
+часто используемых паролей. Возьмём стандартный список паролей
+rockyou.txt для kali linux. Далее распакуем архив командой <em>sudo gzip
+-d</em>. Нужно сделать так, чтобы файл rockyou.txt находился в домашней
+директории (рис. 1)</p>
+<figure id="fig:001">
+<img src="image/001.png" style="width:70.0%"
+alt="Распаковка архива со списком паролей" />
+<figcaption aria-hidden="true">Распаковка архива со списком
+паролей</figcaption>
+</figure>
+<h2 id="настройка-cookie">Настройка cookie</h2>
+<p>Далее зайдём на сайт DVWA, который был получен в ходе предыдущего
+этапа индивидуального проекта. Для запроса hydra, который мы будем
+исползовать позже, нам понадобятся параметры cookie с этого сайта. Для
+того чтобы получить информацию о параметрах cookie надо установить
+расширение для браузера (рис. 2)</p>
+<figure id="fig:002">
+<img src="image/002.png" style="width:50.0%"
+alt="Установка расширения" />
+<figcaption aria-hidden="true">Установка расширения</figcaption>
+</figure>
+<h2 id="настройка-cookie-1">Настройка cookie</h2>
+<p>Теперь мы можем увидеть параметры cookie, а также можем их
+скопировать (рис. 3)</p>
+<figure id="fig:003">
+<img src="image/003.png" style="width:15.0%" alt="Параметры cookie" />
+<figcaption aria-hidden="true">Параметры cookie</figcaption>
+</figure>
+<h2 id="запрос-к-hydra">Запрос к hydra</h2>
+<p>Теперь вводим в hydra запрос нужную информацию. Пароль будем
+подбирать для пользователя admin, используя get-запрос с двумя
+праметрами cookie (security и PHPSESSID). Для этого введём команду
+<em>hydra -l admin -P ~/rockyou.txt -s 80 localhost http-get-form
+“/DVWA/vulnerabilities/brute/:username=<sup>USER</sup>&amp;password=<sup>PASS</sup>&amp;Login=Login:H=Cookie:security=medium;
+PHPSESSID=mo5of0gko8op9bf62bhsbefkc1:F=Username and/or password
+incorrect.”</em> (рис. 4)</p>
+<figure id="fig:004">
+<img src="image/004.png" style="width:70.0%" alt="Запрос к hydra" />
+<figcaption aria-hidden="true">Запрос к hydra</figcaption>
+</figure>
+<h2 id="запрос-к-hydra-1">Запрос к hydra</h2>
+<p>Спустя время появится результат с подходящим паролем. Введём
+полученные данные на сайт для проверки. После мы получим положительный
+результат проверки пароля. Всё правильно и всё хорошо!!! (рис. 5)</p>
+<figure id="fig:005">
+<img src="image/005.png" style="width:60.0%"
+alt="Ввод полученного результата в уязвимую форму" />
+<figcaption aria-hidden="true">Ввод полученного результата в уязвимую
+форму</figcaption>
+</figure>
+<h2 id="запрос-к-hydra-2">Запрос к hydra</h2>
+<figure id="fig:006">
+<img src="image/006.png" style="width:70.0%" alt="Результат" />
+<figcaption aria-hidden="true">Результат</figcaption>
+</figure>
+<h1 id="подведение-итогов">Подведение итогов</h1>
+<h2 id="выводы">Выводы</h2>
+<p>В ходе выполнения 3-ого этапа индивидуального проекта мы приобрели
+практические навыки работы по использованию инструмента hydra для
+бутфорса паролей.</p>
+<h2 id="список-литературы">Список литературы</h2>
+<ol type="1">
+<li>Этапы реализации проекта [Электронный ресурс] URL:
+https://esystem.rudn.ru/mod/page/view.php?id=1220336</li>
+<li>Словарь Rockyou.txt где находится в Kali Linux и как скачать
+[Электронный ресурс] URL: https://spy-soft.net/rockyou-txt/</li>
+<li>How to Brute Force Attack on Web Forms? [Step-by-Step] [Электронный
+ресурс] URL:
+https://www.golinuxcloud.com/brute-force-attack-web-forms/</li>
+<li>Расширение Cookie-Editor [Электронный ресурс] URL:
+https://addons.mozilla.org/en-US/firefox/addon/cookie-editor/?utm_campaign=external-cookie-editor.com</li>
+</ol>
