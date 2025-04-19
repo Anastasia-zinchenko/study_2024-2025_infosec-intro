@@ -1,0 +1,313 @@
+<h1 id="информация">Информация</h1>
+<h2 id="докладчик">Докладчик</h2>
+<ul>
+<li>Зинченко Анастасия Романовна</li>
+<li>НБИбд-02-23</li>
+<li>Российский университет дружбы народов</li>
+</ul>
+<h1 id="цель-работы">Цель работы</h1>
+<p>Целью данной работы является изучение механизмов изменения
+идентификаторов, применения SetUID- и Sticky-битов. Получение
+практических навыков работы в консоли с дополнительными атрибутами.
+Рассмотрение работы механизма смены идентификатора процессов
+пользователей, а также влияние бита Sticky на запись и удаление
+файлов.</p>
+<h1 id="выполнение-лабораторной-работы">Выполнение лабораторной
+работы</h1>
+<h2 id="подготовка-лабораторного-стенда">Подготовка лабораторного
+стенда</h2>
+<p>Для лабораторной работы необходимо проверить, установлен ли
+компилятор gcc. Проверим это с помощью команды <em>gcc -v</em>. Также
+осуществим отключение системы запретов с помощью <em>sudo setenforce
+0</em> и проверим командой <em>getenforce</em>, что выводится Permissive
+(рис. <span class="citation"
+data-cites="fig:001">[-@fig:001]</span>)</p>
+<figure id="fig:001">
+<img src="image/5.001.png" style="width:70.0%"
+alt="Подготовка к лабораторной работе" />
+<figcaption aria-hidden="true">Подготовка к лабораторной
+работе</figcaption>
+</figure>
+<h2 id="создание-программы">Создание программы</h2>
+<p>Войдём в систему от имени пользователя guest. И создадим программу
+simpleid.c (рис. <span class="citation"
+data-cites="fig:002">[-@fig:002]</span>), (рис. <span class="citation"
+data-cites="fig:003">[-@fig:003]</span>)</p>
+<figure id="fig:002">
+<img src="image/5.002.png" style="width:70.0%"
+alt="Создание и открытие файла simpleid.c" />
+<figcaption aria-hidden="true">Создание и открытие файла
+simpleid.c</figcaption>
+</figure>
+<p>Листинг программы simpleid.c:</p>
+<pre><code>#include &lt;sys/types.h&gt;
+#include &lt;unistd.h&gt;
+#include &lt;stdio.h&gt;
+int
+main ()
+    {
+        uid_t uid = geteuid ();
+        gid_t gid = getegid ();
+        printf (&quot;uid=%d, gid=%d\n&quot;, uid, gid);
+        return 0;
+    }</code></pre>
+<figure id="fig:003">
+<img src="image/5.003.png" style="width:70.0%"
+alt="Редактирование файла simpleid.c" />
+<figcaption aria-hidden="true">Редактирование файла
+simpleid.c</figcaption>
+</figure>
+<p>Скомплилируем программу и убедимся, что файл программы создан:
+<em>gcc simpleid.c -o simpleid</em> (рис. <span class="citation"
+data-cites="fig:004">[-@fig:004]</span>)</p>
+<figure id="fig:004">
+<img src="image/5.004.png" style="width:70.0%"
+alt="Компиляция программы simpleid.c" />
+<figcaption aria-hidden="true">Компиляция программы
+simpleid.c</figcaption>
+</figure>
+<p>Выполним программу simpleid: <em>./simpleid</em>. В выводе файла
+выписыны номера пользоватея и групп, от вывода при вводе id, они
+отличаются только тем, что информации меньше (рис. <span
+class="citation" data-cites="fig:005">[-@fig:005]</span>)</p>
+<figure id="fig:005">
+<img src="image/5.005.png" style="width:70.0%"
+alt="Выполнение программы simpleid" />
+<figcaption aria-hidden="true">Выполнение программы
+simpleid</figcaption>
+</figure>
+<p>Выполните системную программу id: <em>id</em> (рис. <span
+class="citation" data-cites="fig:006">[-@fig:006]</span>)</p>
+<figure id="fig:006">
+<img src="image/5.006.png" style="width:70.0%"
+alt="Выполнение системной программы id" />
+<figcaption aria-hidden="true">Выполнение системной программы
+id</figcaption>
+</figure>
+<p>Далее усложним программу, добавив вывод действительных
+идентификаторов. Создадим программу под названием simpleid2.c (рис.
+<span class="citation" data-cites="fig:007">[-@fig:007]</span>)</p>
+<p>Листинг программы simpleid2.c:</p>
+<pre><code>#include &lt;sys/types.h&gt;
+#include &lt;unistd.h&gt;
+#include &lt;stdio.h&gt;
+int
+main ()
+    {
+        uid_t real_uid = getuid ();
+        uid_t e_uid = geteuid ();
+        gid_t real_gid = getgid ();
+        gid_t e_gid = getegid () ;
+        printf (&quot;e_uid=%d, e_gid=%d\n&quot;, e_uid, e_gid);
+        printf (&quot;real_uid=%d, real_gid=%d\n&quot;, real_uid, real_gid);
+        return 0;
+    }</code></pre>
+<figure id="fig:007">
+<img src="image/5.007.png" style="width:70.0%"
+alt="Редактирование файла simpleid2.c" />
+<figcaption aria-hidden="true">Редактирование файла
+simpleid2.c</figcaption>
+</figure>
+<p>Скомпилируем и запустим simpleid2.c: <em>gcc simpleid2.c -o
+simpleid2</em> и <em>./simpleid2</em> (рис. <span class="citation"
+data-cites="fig:008">[-@fig:008]</span>), (рис. <span class="citation"
+data-cites="fig:009">[-@fig:009]</span>)</p>
+<figure id="fig:008">
+<img src="image/5.008.png" style="width:70.0%"
+alt="Компиляция программы simpleid2.c" />
+<figcaption aria-hidden="true">Компиляция программы
+simpleid2.c</figcaption>
+</figure>
+<figure id="fig:009">
+<img src="image/5.009.png" style="width:70.0%"
+alt="Выполнение программы simpleid2" />
+<figcaption aria-hidden="true">Выполнение программы
+simpleid2</figcaption>
+</figure>
+<p>От имени суперпользователя выполним команды: <em>chown root:guest
+/home/guest/simpleid2</em> и <em>chmod u+s /home/guest/simpleid2</em>.
+Также выполним проверку правильности установки новых атрибутов и смены
+владельца файла simpleid2: <em>ls -l simpleid2</em>. С помощью chown мы
+меняем владельца файла на суперпользователя, а с помощью chmod меняем
+права доступа (рис. <span class="citation"
+data-cites="fig:010">[-@fig:010]</span>)</p>
+<figure id="fig:010">
+<img src="image/5.010.png" style="width:70.0%"
+alt="Смена владельца файла и прав доступа к файлу simpleid2" />
+<figcaption aria-hidden="true">Смена владельца файла и прав доступа к
+файлу simpleid2</figcaption>
+</figure>
+<p>Запустим simpleid2 и id: <em>./simpleid2</em> и <em>id</em>. Наша
+команда снова вывела только ограниченное количество информации (рис.
+<span class="citation" data-cites="fig:011">[-@fig:011]</span>)</p>
+<figure id="fig:011">
+<img src="image/5.011.png" style="width:70.0%"
+alt="Запуск simpleid2 и id" />
+<figcaption aria-hidden="true">Запуск simpleid2 и id</figcaption>
+</figure>
+<p>Создадим программу readfile.c (рис. <span class="citation"
+data-cites="fig:012">[-@fig:012]</span>), (рис. <span class="citation"
+data-cites="fig:013">[-@fig:013]</span>)</p>
+<figure id="fig:012">
+<img src="image/5.012.png" style="width:70.0%"
+alt="Создание и открытие файла readfile.c" />
+<figcaption aria-hidden="true">Создание и открытие файла
+readfile.c</figcaption>
+</figure>
+<p>Листинг программы readfile.c:</p>
+<pre><code>#include &lt;fcntl.h&gt;
+#include &lt;stdio.h&gt;
+#include &lt;sys/stat.h&gt;
+#include &lt;sys/types.h&gt;
+#include &lt;unistd.h&gt;
+int
+main (int argc, char* argv[])
+    {
+        unsigned char buffer[16];
+        size_t bytes_read;
+        int i;
+        int fd = open (argv[1], O_RDONLY);
+        do
+            {
+                bytes_read = read (fd, buffer, sizeof (buffer));
+                for (i =0; i &lt; bytes_read; ++i) printf(&quot;%c&quot;, buffer[i]);
+            }
+        while (bytes_read == sizeof (buffer));
+        close (fd);
+        return 0;
+    }</code></pre>
+<figure id="fig:013">
+<img src="image/5.013.png" style="width:70.0%"
+alt="Редактирование файла readfile.c" />
+<figcaption aria-hidden="true">Редактирование файла
+readfile.c</figcaption>
+</figure>
+<p>Откомпилируем её: <em>gcc readfile.c -o readfile</em> (рис. <span
+class="citation" data-cites="fig:014">[-@fig:014]</span>)</p>
+<figure id="fig:014">
+<img src="image/5.014.png" style="width:70.0%"
+alt="Компиляция программы readfile.c" />
+<figcaption aria-hidden="true">Компиляция программы
+readfile.c</figcaption>
+</figure>
+<p>Далее сменим владельца у файла readfile.c и изменим права так, чтобы
+только суперпользователь (root) мог прочитать его, a guest не мог (рис.
+<span class="citation" data-cites="fig:015">[-@fig:015]</span>)</p>
+<figure id="fig:015">
+<img src="image/5.015.png" style="width:70.0%"
+alt="Смена владельца файла и прав доступа к файлу readfile" />
+<figcaption aria-hidden="true">Смена владельца файла и прав доступа к
+файлу readfile</figcaption>
+</figure>
+<p>Проверим, может ли программа readfile прочитать файл readfile.c (рис.
+<span class="citation" data-cites="fig:016">[-@fig:016]</span>)</p>
+<figure id="fig:016">
+<img src="image/5.016.png" style="width:70.0%"
+alt="Попытка прочесть содержимое файла readfile.c программой readfile" />
+<figcaption aria-hidden="true">Попытка прочесть содержимое файла
+readfile.c программой readfile</figcaption>
+</figure>
+<p>Теперь попробуем прочесть эти же файлы от имени суперпользователя
+(рис. <span class="citation"
+data-cites="fig:018">[-@fig:018]</span>)</p>
+<figure id="fig:018">
+<img src="image/5.018.png" style="width:70.0%"
+alt="Попытка прочесть содержимое файлов от имени суперпользователя" />
+<figcaption aria-hidden="true">Попытка прочесть содержимое файлов от
+имени суперпользователя</figcaption>
+</figure>
+<h2 id="исследование-sticky-бита">Исследование Sticky-бита</h2>
+<p>Выясним, установлен ли атрибут Sticky на директории /tmp, для чего
+выполним команду <em>ls -l / | grep tmp</em>. Так как ввыводе есть буква
+t, это значит что атрибут установлен (рис. <span class="citation"
+data-cites="fig:019">[-@fig:019]</span>)</p>
+<figure id="fig:019">
+<img src="image/5.019.png" style="width:70.0%"
+alt="Проверка атрибутов директории tmp" />
+<figcaption aria-hidden="true">Проверка атрибутов директории
+tmp</figcaption>
+</figure>
+<p>От имени пользователя guest создадим файл file01.txt в директории
+/tmp со словом test: <em>echo “test” &gt; /tmp/file01.txt</em> (рис.
+<span class="citation" data-cites="fig:020">[-@fig:020]</span>)</p>
+<figure id="fig:020">
+<img src="image/5.020.png" style="width:70.0%"
+alt="Создание файла file01.txt со словом test" />
+<figcaption aria-hidden="true">Создание файла file01.txt со словом
+test</figcaption>
+</figure>
+<p>Просмотрим атрибуты у только что созданного файла <em>ls -l
+/tmp/file01.txt</em> и разрешим чтение и запись для категории
+пользователей «все остальные»: <em>chmod o+rw /tmp/file01.txt</em> (рис.
+<span class="citation" data-cites="fig:021">[-@fig:021]</span>)</p>
+<figure id="fig:021">
+<img src="image/5.021.png" style="width:70.0%"
+alt="Смена атрибутов файла file01.txt" />
+<figcaption aria-hidden="true">Смена атрибутов файла
+file01.txt</figcaption>
+</figure>
+<p>От пользователя guest2 (не являющегося владельцем) попробуем
+прочитать файл /tmp/file01.txt: <em>cat /tmp/file01.txt</em> (рис. <span
+class="citation" data-cites="fig:022">[-@fig:022]</span>)</p>
+<figure id="fig:022">
+<img src="image/5.022.png" style="width:70.0%"
+alt="Попытка чтеня файла" />
+<figcaption aria-hidden="true">Попытка чтеня файла</figcaption>
+</figure>
+<p>От пользователя guest2 попробуем дозаписать в файл /tmp/file01.txt
+слово test2 командой <em>echo “test2” &gt; /tmp/file01.txt</em> (рис.
+<span class="citation" data-cites="fig:023">[-@fig:023]</span>)</p>
+<figure id="fig:023">
+<img src="image/5.023.png" style="width:70.0%"
+alt="Попытка дозаписи в файл" />
+<figcaption aria-hidden="true">Попытка дозаписи в файл</figcaption>
+</figure>
+<p>От пользователя guest2 попробуем записать в файл /tmp/file01.txt
+слово test3, стерев при этом всю имеющуюся в файле информацию командой
+<em>echo “test3” &gt; /tmp/file01.txt</em> (рис. <span class="citation"
+data-cites="fig:024">[-@fig:024]</span>)</p>
+<figure id="fig:024">
+<img src="image/5.024.png" style="width:70.0%"
+alt="Попытка записи в файл и удаление всей имеющейся в нём информации" />
+<figcaption aria-hidden="true">Попытка записи в файл и удаление всей
+имеющейся в нём информации</figcaption>
+</figure>
+<p>От пользователя guest2 попробуем удалить файл /tmp/file01.txt
+командой <em>rm /tmp/file01.txt</em> (рис. <span class="citation"
+data-cites="fig:025">[-@fig:025]</span>)</p>
+<figure id="fig:025">
+<img src="image/5.025.png" style="width:70.0%"
+alt="Попытка удалить файл" />
+<figcaption aria-hidden="true">Попытка удалить файл</figcaption>
+</figure>
+<p>Далее от имени суперпользователя снимем с директории tmp атрибут
+Sticky командой <em>chmod -t /tmp</em> (рис. <span class="citation"
+data-cites="fig:026">[-@fig:026]</span>), (рис. <span class="citation"
+data-cites="fig:027">[-@fig:027]</span>)</p>
+<figure id="fig:026">
+<img src="image/5.026.png" style="width:70.0%"
+alt="Снятие с директории tmp атрибута Sticky" />
+<figcaption aria-hidden="true">Снятие с директории tmp атрибута
+Sticky</figcaption>
+</figure>
+<figure id="fig:027">
+<img src="image/5.027.png" style="width:70.0%"
+alt="Проверка того что атрибут снялся" />
+<figcaption aria-hidden="true">Проверка того что атрибут
+снялся</figcaption>
+</figure>
+<h1 id="выводы">Выводы</h1>
+<p>В результате выполнения работы мы изучили механизмы изменения
+идентификаторов, применения SetUID- и Sticky-битов. Получили
+практические навыки работы в консоли с дополнительными атрибутами.
+Рассмотрели работы механизма смены идентификатора процессов
+пользователей, а также влияние бита Sticky на запись и удаление
+файлов</p>
+<h1 id="список-литературы">Список литературы</h1>
+<ol type="1">
+<li><p>Лаборатораня работа №5 [Электронный ресурс] URL:
+https://esystem.rudn.ru/pluginfile.php/2580984/mod_resource/content/2/005-lab_discret_sticky.pdf</p></li>
+<li><p>Инструментарий программиста в Linux: Компилятор GCC [Электронный
+ресурс] URL:
+http://parallel.imm.uran.ru/freesoft/make/instrum.html</p></li>
+</ol>

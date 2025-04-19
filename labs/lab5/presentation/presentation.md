@@ -1,10 +1,10 @@
 ---
 ## Front matter
 lang: ru-RU
-title: Презентация лабораторной работы № 5
-subtitle: Дисциплина: Основы информационной безопасности
+title: Лабораторная работа №5
+subtitle: Основы информационной безопасности
 author:
-  - Зинченко А.Р.
+  - Зинченко А. Р., НБИбд-02-23
 institute:
   - Российский университет дружбы народов, Москва, Россия
 date: 19 апреля 2025
@@ -22,6 +22,19 @@ section-titles: true
 theme: metropolis
 header-includes:
  - \metroset{progressbar=frametitle,sectionpage=progressbar,numbering=fraction}
+ - '\makeatletter'
+ - '\beamer@ignorenonframefalse'
+ - '\makeatother'
+ 
+## Fonts
+mainfont: PT Serif
+romanfont: PT Serif
+sansfont: PT Sans
+monofont: PT Mono
+mainfontoptions: Ligatures=TeX
+romanfontoptions: Ligatures=TeX
+sansfontoptions: Ligatures=TeX,Scale=MatchLowercase
+monofontoptions: Scale=MatchLowercase,Scale=0.9
 ---
 
 # Информация
